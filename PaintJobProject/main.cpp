@@ -5,7 +5,7 @@ using namespace std;
 
 //Named Constants
 const double GALLONS_PER_SQFT = 1.0 / 110.0;
-const double LABOR_HOURS_PER_GALLON = 8.0 / 110.0;
+const double LABOR_HOURS_PER_SQFT = 8.0 / 110.0;
 const double LABOR_COST_PER_HOUR = 25.0;
 
 /*
@@ -64,3 +64,58 @@ double getSquareFootage(int roomNumber)
 	return sqft;
 }
 
+/*
+Purpose: Calculate gallons needed for room (rounded up)
+Preconditions: sqFt >= 0
+Postconditions: Return integer gallons needed
+*/
+int gallonsForRoom(double sqFt)
+{
+	return ceil(sqFt * GALLONS_PER_SQFT);
+}
+
+/*
+Purpose: Display final paint job estimate
+Preconditions: All values are correctly calculated
+Postconditions: Outputs formatted estimate to screen
+*/
+void displayEstimate(int gallons, double hours, double paintCost, double laborCost)
+{
+	double totalCost = paintCost + laborCost;
+
+	cout << fixed << setprecision(2);
+
+	cout << "\nPaint Job Estimate:\n";
+	cout << "Gallons of paint needed: " << gallons << endl;
+	cout << "Hours of labor needed: " << hours << endl;
+	cout << "Cost of paint: $" << paintCost << endl;
+	cout << "Cost of labor: $" << laborCost << endl;
+	cout << "Total cost: $" << totalCost << endl;
+}
+
+int main()
+{
+	int rooms = getNumRooms();
+	double pricePerGallon = getPricePerGallon();
+
+	int totalGallons = 0;
+	double totalHours = 0.0;
+
+	//Loop through rooms
+	for (int i = 1; i <= rooms; i++)
+	{
+		double sqft = getSquareFootage(i);
+
+		int gallons = gallonsForRoom(sqft);
+		double hours = sqft * LABOR_HOURS_PER_SQFT;
+
+		totalGallons += gallons;
+		totalHours += hours;
+	}
+	double paintCost = totalGallons * pricePerGallon;
+	double laborCost = totalHours * LABOR_COST_PER_HOUR;
+
+	displayEstimate(totalGallons, totalHours, paintCost, laborCost);
+
+	return 0;
+}
