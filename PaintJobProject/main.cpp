@@ -27,4 +27,40 @@ int getNumRooms()
 	}
 	return rooms;
 }
+/*
+Purpose: Get and validates price per gallon
+Preconditions: None
+Postconditions: Returns a double >= 10.00
+*/
+double getPricePerGallon()
+{
+	double price;
+	cout << "Enter the price per gallon (>= 10): $";
+	cin >> price;
+	while (price < 10.00)
+	{
+		cout << "Invalid input. Please enter a price of at least $10.00: $";
+		cin >> price;
+	}
+	return price;
+}
+
+/*
+Purpose: get and validate square footage for room
+Preconditions: None
+Postconditions: Returns a double >= 0
+*/
+double getSquareFootage(int roomNumber)
+{
+	double sqft;
+	cout << "Enter the square footage for room " << roomNumber << ": ";
+	cin >> sqft;
+
+	while (sqft < 0)
+	{
+		cout << "Invalid input. Please enter a value 0 or greater: ";
+		cin >> sqft;
+	}
+	return sqft;
+}
 
